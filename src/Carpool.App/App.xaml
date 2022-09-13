@@ -1,0 +1,23 @@
+﻿<Application x:Class="Carpool.App.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:Carpool.App"
+			 xmlns:viewModels="clr-namespace:Carpool.App.ViewModels"
+			 xmlns:views="clr-namespace:Carpool.App.Views"
+			 xmlns:hc="https://handyorg.github.io/handycontrol" 
+			 xmlns:converters="clr-namespace:Carpool.App.Converters">
+	<Application.Resources>
+		<ResourceDictionary>
+			<ResourceDictionary.MergedDictionaries>
+				<hc:ThemeResources/>
+				<hc:Theme/>
+			</ResourceDictionary.MergedDictionaries>
+			
+			<converters:IdToJoinedConverter x:Key="IdToJoinedConverter"/>
+			<converters:NullImageSourceConverter x:Key="NullImageSourceConverter"/>
+			
+			<FontFamily x:Key="MainFont">Lucida Sans</FontFamily>
+			
+		</ResourceDictionary>
+	</Application.Resources>
+</Application>

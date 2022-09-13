@@ -1,0 +1,202 @@
+﻿<Window x:Class="Carpool.App.Views.RideDetailWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Carpool.App.Views"
+        mc:Ignorable="d"
+        Title="RideDetailWindow" 
+		MinHeight="500" MinWidth="900"
+		Height="500" Width="900"
+		xmlns:viewModels="clr-namespace:Carpool.App.ViewModels" 
+		d:DataContext="{d:DesignInstance viewModels:RideDetailViewModel}">
+
+	<Window.Resources>
+		<DataTemplate x:Key="userTemplate">
+			<WrapPanel>
+				<Grid>
+					<Ellipse Height="30" Width="30" HorizontalAlignment="Left">
+						<Ellipse.Fill>
+							<SolidColorBrush Color="Gray"/>
+						</Ellipse.Fill>
+					</Ellipse>
+					<Ellipse Height="30" Width="30" HorizontalAlignment="Left">
+						<Ellipse.Fill>
+							<ImageBrush ImageSource="{Binding PhotoUrl, Converter={StaticResource NullImageSourceConverter}}"/>
+						</Ellipse.Fill>
+					</Ellipse>
+				</Grid>
+				<Label Content="{Binding Name}" MinWidth="70" BorderThickness="0" Background="Transparent" 
+					   HorizontalContentAlignment="Left" Margin="5,0,0,0" FontFamily="{StaticResource MainFont}"/>
+				<Label Content="{Binding Surname}" BorderThickness="0" Background="Transparent" FontFamily="{StaticResource MainFont}"/>
+			</WrapPanel>
+		</DataTemplate>
+	</Window.Resources>
+	
+	<Grid Margin="20">
+		<Grid.RowDefinitions>
+			<RowDefinition Height="auto"/>
+			<RowDefinition Height="*"/>
+			<RowDefinition Height="auto"/>
+		</Grid.RowDefinitions>
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="*"/>
+			<ColumnDefinition Width="300"/>
+		</Grid.ColumnDefinitions>
+		
+		<!--Info about a ride-->
+		<Grid Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2">
+			<Grid.RowDefinitions>
+				<RowDefinition/>
+				<RowDefinition/>
+				<RowDefinition/>
+				<RowDefinition/>
+			</Grid.RowDefinitions>
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="200"/>
+				<ColumnDefinition/>
+				<ColumnDefinition/>
+			</Grid.ColumnDefinitions>
+
+			<Label Content="Start location:" FontSize="14" Grid.Row="0" Grid.Column="0" BorderThickness="0" FontFamily="{StaticResource MainFont}"
+				   Background="Transparent" HorizontalAlignment="Left" FontWeight="Bold"/>
+			<Label Content="End destination:" FontSize="14" Grid.Row="1" Grid.Column="0" BorderThickness="0" FontFamily="{StaticResource MainFont}"
+				   Background="Transparent" HorizontalAlignment="Left" FontWeight="Bold"/>
+			<Label Content="Beginning" FontSize="14" Grid.Row="2" Grid.Column="0" BorderThickness="0" FontFamily="{StaticResource MainFont}"
+				   Background="Transparent" HorizontalAlignment="Left"  FontWeight="Bold"/>
+			<Label Content="Duration" FontSize="14" Grid.Row="3" Grid.Column="0" BorderThickness="0" FontFamily="{StaticResource MainFont}"
+				   Background="Transparent" HorizontalAlignment="Left" FontWeight="Bold"/>
+
+			<Label Grid.Row="0" Grid.Column="1" HorizontalAlignment="Left" FontFamily="{StaticResource MainFont}"
+				Content="{Binding SelectedRideModel.Start}" BorderThickness="0" Background="Transparent" FontSize="13"/>
+			<Label Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" FontFamily="{StaticResource MainFont}"
+				Content="{Binding SelectedRideModel.End}" BorderThickness="0" Background="Transparent" FontSize="13"/>
+			<Label Grid.Row="2" Grid.Column="1" HorizontalAlignment="Left" FontFamily="{StaticResource MainFont}" FontSize="13"
+				Content="{Binding SelectedRideModel.Beginning}" ContentStringFormat="d/M/yyyy H:mm" BorderThickness="0" Background="Transparent"/>
+			<Label Grid.Row="3" Grid.Column="1" HorizontalAlignment="Left" FontFamily="{StaticResource MainFont}"
+				Content="{Binding SelectedRideModel.Duration}" BorderThickness="0" Background="Transparent" FontSize="13"/>
+
+			<Border Background="#D0D8E5" CornerRadius="5"
+					Grid.Row="0" Grid.Column="2" Grid.RowSpan="4">
+				<StackPanel>
+					<StackPanel Orientation="Horizontal" Margin="10">
+						<Grid>
+							<Ellipse Height="50" Width="50" HorizontalAlignment="Left">
+								<Ellipse.Fill>
+									<SolidColorBrush Color="Gray"/>
+								</Ellipse.Fill>
+							</Ellipse>
+							<Ellipse Height="50" Width="50" HorizontalAlignment="Left">
+								<Ellipse.Fill>
+									<ImageBrush ImageSource="{Binding RideCarModel.PhotoUrl, Converter={StaticResource NullImageSourceConverter}}"/>
+								</Ellipse.Fill>
+							</Ellipse>
+						</Grid>
+						<Label Content="{Binding RideCarModel.Brand}" Margin="10,0,0,0" FontFamily="{StaticResource MainFont}"
+							   BorderThickness="0" Background="Transparent" FontSize="14" Width="120" HorizontalContentAlignment="Left"/>
+						<Label Content="{Binding RideCarModel.Type}" FontFamily="{StaticResource MainFont}"
+							   BorderThickness="0" Background="Transparent"/>
+					</StackPanel>
+
+					<StackPanel Orientation="Horizontal" Margin="70,0,0,0">
+						<Label Content="Empty seats: " HorizontalAlignment="Left" FontWeight="Bold" FontSize="14" FontFamily="{StaticResource MainFont}"
+						   BorderThickness="0" Background="Transparent" Width="120" HorizontalContentAlignment="Left"/>
+						<Border Width="60" Height="30" CornerRadius="15" Background="Gray" Margin="10,0,0,0">
+							<TextBlock FontFamily="Arial Black" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White">
+								<Run Text="{Binding SeatCapacity}" FontSize="18"/>
+								<Run Text="/"/>
+								<Run Text="{Binding RideCarModel.NumOfEmptySeats}"/>
+							</TextBlock>
+						</Border>
+					</StackPanel>
+				</StackPanel>
+			</Border>
+		</Grid>
+
+		<Grid  Grid.Row="1" Grid.Column="0" Grid.RowSpan="2" Margin="0,10,0,0">
+			<Grid.RowDefinitions>
+				<RowDefinition Height="auto"/>
+				<RowDefinition Height="*"/>
+			</Grid.RowDefinitions>
+
+			<Grid Grid.Row="0">
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="*"/>
+					<ColumnDefinition Width="40"/>
+				</Grid.ColumnDefinitions>
+				<Border Grid.Column="0" CornerRadius="5,5,0,0" Background="#D0D8E5" HorizontalAlignment="Left">
+					<Label Content="Passengers" FontFamily="{StaticResource MainFont}" FontSize="20" HorizontalAlignment="Left"
+						Padding="30,5" BorderThickness="0" Background="Transparent" Margin="0,5,0,0"/>
+				</Border>
+				<Button Grid.Column="1" Content="⟳" Command="{Binding RefreshCommand}" FontFamily="Arial Black" FontWeight="Bold" HorizontalAlignment="Right"
+						Background="Transparent" BorderThickness="0" Foreground="#49A9F0" FontSize="34" Width="40" Height="40" Padding="0"/>
+			</Grid>
+
+			<Border Background="#D0D8E5" Grid.Row="1" CornerRadius="0,5,5,5">
+				<ListBox x:Name="passengerList" BorderThickness="0" Background="Transparent" ItemsSource="{Binding Passengers}" VerticalAlignment="Stretch">
+					<ListBox.ItemTemplate>
+						<DataTemplate>
+							<StackPanel Orientation="Horizontal">
+								<Grid>
+									<Ellipse Height="30" Width="30" HorizontalAlignment="Left">
+										<Ellipse.Fill>
+											<SolidColorBrush Color="DarkGray"/>
+										</Ellipse.Fill>
+									</Ellipse>
+									<Ellipse Height="30" Width="30" HorizontalAlignment="Left">
+										<Ellipse.Fill>
+											<ImageBrush ImageSource="{Binding PhotoUrl, Converter={StaticResource NullImageSourceConverter}}"/>
+										</Ellipse.Fill>
+									</Ellipse>
+								</Grid>
+
+								<Label Content="{Binding Name}" BorderThickness="0" Background="Transparent" FontFamily="{StaticResource MainFont}"
+									   Width="100" HorizontalContentAlignment="Left" Margin="15,0,0,0" FontSize="13"/>
+								<Label Content="{Binding Surname}" BorderThickness="0" Background="Transparent" FontFamily="{StaticResource MainFont}"
+									   Width="130" HorizontalContentAlignment="Left" FontSize="13"/>
+
+
+							</StackPanel>
+						</DataTemplate>
+					</ListBox.ItemTemplate>
+
+					<ListBox.ItemContainerStyle>
+						<Style TargetType="ListBoxItem">
+							<Setter Property="HorizontalContentAlignment" Value="Stretch"></Setter>
+							<Setter Property="Background" Value="#E0E8F5"/>
+							<Setter Property="BorderBrush" Value="#5780AF"/>
+						</Style>
+					</ListBox.ItemContainerStyle>
+				</ListBox>
+			</Border>
+		</Grid>
+
+		<Border Grid.Row="1" Grid.Column="1" CornerRadius="20" Background="#49A9F0" Height="40" Width="120"  HorizontalAlignment="Center">
+			<Button Content="✎ Edit ride" Command="{Binding EditRideCommand}" FontFamily="{StaticResource MainFont}"  Height="40"
+					Background="Transparent" BorderThickness="0" FontWeight="Bold" Foreground="White" FontSize="14" Width="120"/>
+		</Border>
+		
+		<StackPanel Grid.Row="2" Grid.Column="1" Margin="20,10,0,0">
+			<Border CornerRadius="5" BorderThickness="4" BorderBrush="LightSkyBlue">
+				<StackPanel>
+					<Label FontFamily="{StaticResource MainFont}" Content="Passengers" Background="Transparent" BorderThickness="0"
+						   FontSize="19" HorizontalAlignment="Left"/>
+					<Border Height="40" Width="40" CornerRadius="20" Background="#FF4359" Margin="0,10,0,30">
+						<Button Content="❌" Command="{Binding RemovePassengerCommand}" FontFamily="{StaticResource MainFont}" 
+								Background="Transparent" BorderThickness="0" Foreground="White" FontSize="15" Width="40" Height="40"
+								CommandParameter="{Binding ElementName=passengerList, Path=SelectedItem}"/>
+					</Border>
+					<Border Grid.Column="0" Height="40" Width="40" CornerRadius="20" Background="#30E540" Margin="0,0,0,10">
+						<Button Content="➕" Command="{Binding AddPassengerCommand}" FontFamily="{StaticResource MainFont}" 
+								Background="Transparent" BorderThickness="0" Foreground="White" FontSize="15" Width="40" Height="40"
+								CommandParameter="{Binding ElementName=usersComboBox, Path=SelectedItem}"/>
+					</Border>
+
+					<ComboBox ItemsSource="{Binding Users}" ItemTemplate="{StaticResource userTemplate}" FontFamily="{StaticResource MainFont}"
+								BorderBrush="Gray" x:Name="usersComboBox" Height="50"/>
+				</StackPanel>
+			</Border>
+		</StackPanel>
+
+	</Grid>
+</Window>

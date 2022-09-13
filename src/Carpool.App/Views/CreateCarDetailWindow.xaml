@@ -1,0 +1,80 @@
+﻿<Window x:Class="Carpool.App.Views.CreateCarDetailWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Carpool.App.Views"
+        xmlns:global="clr-namespace:Carpool.Common;assembly=Carpool.Common"
+		xmlns:sys="clr-namespace:System;assembly=mscorlib"
+        mc:Ignorable="d"
+        Title="CreateCarDetailWindow" 
+		MinHeight="450" MinWidth="800"
+		Height="450" Width="800"
+		xmlns:viewModels="clr-namespace:Carpool.App.ViewModels" 
+		d:DataContext="{d:DesignInstance viewModels:CreateCarDetailViewModel}">
+
+	<Window.Resources>
+		<ObjectDataProvider x:Key="enumValues" MethodName="GetValues" ObjectType="{x:Type sys:Enum}">
+			<ObjectDataProvider.MethodParameters>
+				<x:Type TypeName="global:CarTypes"/>
+			</ObjectDataProvider.MethodParameters>
+		</ObjectDataProvider>
+	</Window.Resources>
+
+	<Grid HorizontalAlignment="Center">
+		<Grid.RowDefinitions>
+			<RowDefinition Height="*"/>
+			<RowDefinition Height="*"/>
+			<RowDefinition Height="*"/>
+			<RowDefinition Height="*"/>
+			<RowDefinition Height="*"/>
+			<RowDefinition Height="*"/>
+			<RowDefinition Height="*"/>
+		</Grid.RowDefinitions>
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="300"/>
+			<ColumnDefinition Width="55"/>
+			<ColumnDefinition Width="*"/>
+		</Grid.ColumnDefinitions>
+
+		<Label Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="3" HorizontalContentAlignment="Center" Content="Car settings"
+				   Background="White" BorderThickness="0" FontSize="30" FontFamily="{StaticResource MainFont}"/>
+
+		<Label  Grid.Row="1" Grid.Column="0" Content="Brand"
+				Background="White" BorderThickness="0" FontSize="15" FontFamily="{StaticResource MainFont}" FontWeight="Bold"/>
+		<TextBox  Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding CarDetailModel.Brand}" Width="400" Height="40" HorizontalAlignment="Left" BorderBrush="LightSkyBlue"/>
+
+		<Label  Grid.Row="2" Grid.Column="0" Content="Type"
+				Background="White" BorderThickness="0" FontSize="15" FontFamily="{StaticResource MainFont}" FontWeight="Bold"/>
+		<ComboBox Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" ItemsSource="{Binding Source={StaticResource enumValues}}" Width="400" Height="40" HorizontalAlignment="Left" BorderBrush="LightSkyBlue"
+				  SelectedItem="{Binding CarDetailModel.Type}"/>
+
+		<Label  Grid.Row="3" Grid.Column="0" Content="Passenger seats"
+				Background="White" BorderThickness="0" FontSize="15" FontFamily="{StaticResource MainFont}" FontWeight="Bold"/>
+		<TextBox  Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding CarDetailModel.NumOfEmptySeats}" Width="400" Height="40" HorizontalAlignment="Left" BorderBrush="LightSkyBlue"
+				  PreviewTextInput="Seats_PreviewTextInput"/>
+
+		<Label  Grid.Row="4" Grid.Column="0" Content="Registration"
+				Background="White" BorderThickness="0" FontSize="15" FontFamily="{StaticResource MainFont}" FontWeight="Bold"/>
+		<Border Width="400" Height="40" HorizontalAlignment="Left" BorderBrush="LightSkyBlue" BorderThickness="1" Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2" CornerRadius="5">
+			<DatePicker SelectedDate="{Binding CarDetailModel.FirstRegistration}" Background="Transparent" BorderThickness="0" VerticalContentAlignment="Center"/> <!--Style="{DynamicResource DatePickerTextBoxStyle1}"-->
+		</Border>
+
+		<Label  Grid.Row="5" Grid.Column="0" Content="Photo URL"
+				Background="White" BorderThickness="0" FontSize="15" FontFamily="{StaticResource MainFont}" FontWeight="Bold"/>
+		<Ellipse Height="45" Width="45" HorizontalAlignment="Left" Grid.Row="5" Grid.Column="1" Fill="Gray"/>
+		<Ellipse Height="45" Width="45" HorizontalAlignment="Left" Grid.Row="5" Grid.Column="1">
+			<Ellipse.Fill>
+				<ImageBrush ImageSource="{Binding ElementName=url, Path=Text, Converter={StaticResource NullImageSourceConverter}}"/>
+			</Ellipse.Fill>
+		</Ellipse>
+		<TextBox x:Name="url" Text="{Binding CarDetailModel.PhotoUrl}" Grid.Row="5" Grid.Column="2"
+					 Width="345" Height="40" HorizontalAlignment="Left" BorderBrush="LightSkyBlue"/>
+
+		<Border Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="3" CornerRadius="25" Background="#49A9F0" 
+				Height="50" Width="150">
+			<Button Content="Save" Command="{Binding SaveCarCommand}" BorderThickness="0" Background="Transparent" 
+					FontWeight="Bold" FontSize="17" FontFamily="{StaticResource MainFont}"  Height="50" Width="150" Foreground="White"/>
+		</Border>
+	</Grid>
+</Window>

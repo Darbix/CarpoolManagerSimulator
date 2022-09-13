@@ -1,0 +1,54 @@
+﻿<UserControl x:Class="Carpool.App.Views.UserDetailPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Carpool.App.Views"
+      mc:Ignorable="d" 
+	  xmlns:views="clr-namespace:Carpool.App.Views"
+	  xmlns:viewModels="clr-namespace:Carpool.App.ViewModels"
+	  d:DataContext="{d:DesignInstance viewModels:UserDetailViewModel}">
+
+	<Grid>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="*"/>
+			<RowDefinition Height="2*"/>
+			<RowDefinition Height="*"/>
+		</Grid.RowDefinitions>
+
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="200"/>
+			<ColumnDefinition Width="*"/>
+		</Grid.ColumnDefinitions>
+
+		<views:RideListView x:Name="RidesList" Grid.Row="0" Grid.Column="1"  DataContext="{Binding RideListViewModel}"/>
+		<views:AllRidesListView x:Name="AllRidesList" Grid.Row="1" Grid.Column="1"  DataContext="{Binding AllRidesListViewModel}" Margin="0,10"/>
+		<views:CarListView x:Name="CarsList" Grid.Row="2" Grid.Column="1"  DataContext="{Binding CarListViewModel}"/>
+
+
+		<!-- Background circle color, when there is no image -->
+		<Ellipse Height="130" Width="130" Grid.Row="0" Grid.Column="0" Fill="Gray"/>
+		<Ellipse Height="130" Width="130" Grid.Row="0" Grid.Column="0">
+			<Ellipse.Fill>
+				<ImageBrush ImageSource="{Binding SelectedUserDetailModel.PhotoUrl, Converter={StaticResource NullImageSourceConverter}}"/>
+			</Ellipse.Fill>
+		</Ellipse>
+
+		<StackPanel Grid.Row="1" Grid.Column="0" VerticalAlignment="Top" Margin="5">
+			<Label Content="{Binding SelectedUserDetailModel.Name}" BorderThickness="0" FontSize="19" Background="Transparent" FontWeight="SemiBold"/>
+			<Label Content="{Binding SelectedUserDetailModel.Surname}" BorderThickness="0" FontSize="17" Background="Transparent" FontWeight="SemiBold"/>
+
+			<Border Grid.Row="2" Grid.Column="1" CornerRadius="20" Background="#49A9F0" Height="40" Width="100" Margin="0,10" HorizontalAlignment="Center">
+				<Button Content="✎ Edit" Command="{Binding EditUserCommand}" FontFamily="{StaticResource MainFont}" FontSize="14"
+					Background="Transparent" BorderThickness="0" FontWeight="Bold" Foreground="White" Width="100"/>
+			</Border>
+		</StackPanel>
+
+		<Border Grid.Row="2" Grid.Column="0" CornerRadius="20" Background="#FF4359" Height="40" Width="100"
+				HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,10">
+			<Button Content="Log out" Command="{Binding LogOutCommand}" FontFamily="{StaticResource MainFont}"  FontSize="14"
+				Background="Transparent" BorderThickness="0" FontWeight="Bold" Foreground="White" Width="100"/>
+		</Border>
+	</Grid>
+	
+</UserControl>

@@ -1,0 +1,72 @@
+﻿<Window x:Class="Carpool.App.Views.CreateUserDetailWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Carpool.App.Views"
+        mc:Ignorable="d"
+        Title="CreateUserDetailWindow" 
+		MinHeight="450" MinWidth="800"
+		Height="450" Width="800"
+		x:Name="ThisWindow"
+		xmlns:viewModels="clr-namespace:Carpool.App.ViewModels"
+	    d:DataContext="{d:DesignInstance viewModels:CreateUserDetailViewModel}">
+	
+	<Grid
+		MaxHeight="450"
+		MaxWidth="800">
+		<Grid.RowDefinitions>
+			<RowDefinition Height="*"/>
+			<RowDefinition Height="*"/>
+			<RowDefinition Height="*"/>
+			<RowDefinition Height="*"/>
+			<RowDefinition Height="*"/>
+			<RowDefinition Height="*"/>
+			<RowDefinition Height="*"/>
+		</Grid.RowDefinitions>
+
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="300"/>
+			<ColumnDefinition Width="55"/>
+			<ColumnDefinition Width="*"/>
+		</Grid.ColumnDefinitions>
+
+		<Label Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="3" HorizontalContentAlignment="Center" Content="User registration"
+			   Background="White" BorderThickness="0" FontSize="30" FontFamily="{StaticResource MainFont}"/>
+
+		<Label Grid.Column="0" Grid.Row="1" HorizontalContentAlignment="Center" Content="Name"
+			   Background="White" BorderThickness="0" FontSize="15" FontFamily="{StaticResource MainFont}" FontWeight="Bold"/>
+		<TextBox Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2" Text="{Binding UserModel.Name}" Width="400" Height="40" 
+				 HorizontalAlignment="Left" BorderBrush="LightSkyBlue"/>
+
+		<Label Grid.Column="0" Grid.Row="2" HorizontalContentAlignment="Center" Content="Surname"
+			   Background="White" BorderThickness="0" FontSize="15" FontFamily="{StaticResource MainFont}" FontWeight="Bold"/>
+		<TextBox Grid.Column="1" Grid.Row="2" Grid.ColumnSpan="2" Text="{Binding UserModel.Surname}" Width="400" Height="40" 
+				 HorizontalAlignment="Left" BorderBrush="LightSkyBlue"/>
+
+		<Label Grid.Column="0" Grid.Row="3" HorizontalContentAlignment="Center" Content="Age"
+			   Background="White" BorderThickness="0" FontSize="15" FontFamily="{StaticResource MainFont}" FontWeight="Bold"/>
+		<TextBox Grid.Column="1" Grid.Row="3" Grid.ColumnSpan="2" Text="{Binding UserModel.Age}" PreviewTextInput="Age_PreviewTextInput"  
+				 Width="400" Height="40" HorizontalAlignment="Left" BorderBrush="LightSkyBlue"/>
+
+		<Label Grid.Column="0" Grid.Row="4" HorizontalContentAlignment="Center" Content="Photo URL"
+			   Background="White" BorderThickness="0" FontSize="15" FontFamily="{StaticResource MainFont}" FontWeight="Bold"/>
+		<Ellipse Height="45" Width="45" HorizontalAlignment="Left" Grid.Row="4" Grid.Column="1" Fill="Gray"/>
+		<Ellipse Height="45" Width="45" HorizontalAlignment="Left" Grid.Row="4" Grid.Column="1">
+			<Ellipse.Fill>
+				<ImageBrush ImageSource="{Binding ElementName=urlBox, Path=Text, Converter={StaticResource NullImageSourceConverter}}"/>
+			</Ellipse.Fill>
+		</Ellipse>
+		<TextBox x:Name="urlBox" Grid.Column="2" Grid.Row="4" Text="{Binding UserModel.PhotoUrl}" Width="345" Height="40" HorizontalAlignment="Left" BorderBrush="LightSkyBlue"/>
+
+		<Label Grid.Column="0" Grid.Row="5" HorizontalContentAlignment="Center" Content="Phone number"
+			   Background="White" BorderThickness="0" FontSize="15" FontFamily="{StaticResource MainFont}" FontWeight="Bold"/>
+		<TextBox Grid.Column="1" Grid.Row="5" Grid.ColumnSpan="2" Text="{Binding UserModel.PhoneNumber}" PreviewTextInput="PhoneNumber_PreviewTextInput" 
+				 Width="400" Height="40" HorizontalAlignment="Left" BorderBrush="LightSkyBlue"/>
+
+		<Border Grid.ColumnSpan="3" Grid.Row="6" CornerRadius="25" Background="#49A9F0" Height="50" Width="150">
+			<Button Command="{Binding UserSaveCommand}" CommandParameter="{Binding ElementName=ThisWindow}" Foreground="White"
+				Content="Save" Height="50" Width="150" BorderThickness="0" Background="Transparent" FontWeight="Bold" FontSize="17" FontFamily="{StaticResource MainFont}"/>
+		</Border>
+	</Grid>
+</Window>
